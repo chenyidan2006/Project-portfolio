@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="基于 PPG 信号的血管参数监测系统——陈一丹项目作品集">
+  <meta name="theme-color" content="#0b1720">
+  <title>PPG 血管参数监测系统｜陈一丹</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="返回顶部">
+      <span class="brand-pulse" aria-hidden="true"></span>
+      <span>PPG / VASCULAR</span>
+    </a>
+    <nav aria-label="页面导航">
+      <a href="#system">系统</a>
+      <a href="#work">我的工作</a>
+      <a href="#product">产品</a>
+      <a href="#honors">成果</a>
+    </nav>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav">菜单</button>
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" hidden>
+    <a href="#system">系统</a><a href="#work">我的工作</a><a href="#product">产品</a><a href="#honors">成果</a>
+  </div>
+
+  <main id="top">
+    <section class="hero section-pad">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span>RESEARCH PROTOTYPE</span><span>2026</span></div>
+        <h1>让一束光，<br><em>读懂脉搏。</em></h1>
+        <p class="hero-lead">基于 PPG 信号的血管参数监测系统，从光电采集、嵌入式通信，到模型推理、数据库与移动 App 的完整工程链路。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#system">查看完整链路</a>
+          <a class="button secondary" href="https://github.com/chenyidan2006/-app" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+        <div class="identity-line">
+          <span>陈一丹</span>
+          <span>App 全栈 · 嵌入式通信 · 算法优化</span>
+        </div>
+      </div>
+      <div class="hero-visual reveal delay-1">
+        <figure class="hero-photo">
+          <img src="./assets/measurement-demo.jpg" alt="使用光电采集原型进行手指测量">
+          <figcaption><span>01</span>光电采集原型 · 实际测量</figcaption>
+        </figure>
+        <div class="signal-card" aria-label="PPG 信号动画示意">
+          <span>LIVE SIGNAL</span>
+          <svg viewBox="0 0 480 120" role="img" aria-label="脉搏波形示意">
+            <path class="grid-line" d="M0 30H480M0 60H480M0 90H480"></path>
+            <path class="pulse-line" pathLength="1" d="M0 76 C24 75 35 74 49 72 C60 70 67 49 77 45 C86 42 93 59 101 67 C110 76 115 76 128 75 C146 74 153 73 163 71 C178 68 181 27 194 20 C206 15 214 53 226 67 C236 77 245 77 262 75 C281 74 289 72 300 69 C314 65 320 37 330 32 C343 26 350 55 362 67 C373 77 382 77 400 75 C422 74 435 72 448 69 C458 67 468 62 480 61"></path>
+          </svg>
+          <div><strong>PPG</strong><small>双通道采集 / 服务端推理</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-strip" aria-label="项目事实">
+      <div><strong>一等奖</strong><span>全国大学生光电设计竞赛 · 华北区</span></div>
+      <div><strong>1005</strong><span>现有五特征训练记录</span></div>
+      <div><strong>端到端</strong><span>硬件 → 云端 → 算法 → App</span></div>
+      <div><strong>进行中</strong><span>全国大学生创新创业项目</span></div>
+    </section>
+
+    <section class="system section-pad" id="system">
+      <div class="section-heading reveal">
+        <span class="section-index">01 / SYSTEM</span>
+        <h2>不是单点 Demo，<br>是一条可运行的数据链路。</h2>
+        <p>设备采集的二进制波形经过帧校验与去重，进入模型推理，再由后端持久化并提供给 App。每一层都有可独立部署的入口。</p>
+      </div>
+      <div class="pipeline reveal delay-1">
+        <article><span class="node-number">01</span><div class="node-icon">◎</div><h3>光电采集</h3><p>传感模块与 ADS8688 完成双通道采样。</p><small>OPTICS / ADC</small></article>
+        <i aria-hidden="true">→</i>
+        <article><span class="node-number">02</span><div class="node-icon">⌁</div><h3>嵌入式通信</h3><p>ESP32 组织数据帧并向服务器可靠上传。</p><small>ESP32 / HTTP</small></article>
+        <i aria-hidden="true">→</i>
+        <article><span class="node-number">03</span><div class="node-icon">∿</div><h3>算法推理</h3><p>Python 调度 MATLAB 编译模型，输出血压与心率。</p><small>PYTHON / MATLAB</small></article>
+        <i aria-hidden="true">→</i>
+        <article><span class="node-number">04</span><div class="node-icon">▦</div><h3>应用闭环</h3><p>Express 与 MySQL 提供账户、设备和历史趋势。</p><small>API / DATABASE / APP</small></article>
+      </div>
+    </section>
+
+    <section class="work section-pad" id="work">
+      <div class="section-heading inverse reveal">
+        <span class="section-index">02 / MY ROLE</span>
+        <h2>我负责的，不止一个页面。</h2>
+        <p>个人工作覆盖应用层、设备到云端的传输层，以及算法训练与部署优化。下面只列实际承担的部分。</p>
+      </div>
+      <div class="role-grid">
+        <article class="role-card reveal">
+          <span class="role-no">A</span><h3>App 全栈开发</h3>
+          <p>完成 uni-app 前端、Node.js / Express 后端与 MySQL 数据设计，覆盖登录、设备绑定、健康总览、趋势、个人资料与双语界面。</p>
+          <ul><li>Vue 3 / uni-app</li><li>Express REST API</li><li>MySQL 数据模型</li></ul>
+        </article>
+        <article class="role-card reveal delay-1">
+          <span class="role-no">B</span><h3>ESP32 → 服务器</h3>
+          <p>打通二进制波形上传链路，完成帧格式校验、文件与元数据落盘、重复帧识别，以及算法任务的串行调度。</p>
+          <ul><li>HTTP Binary Frame</li><li>SHA-256 去重</li><li>可追溯元数据</li></ul>
+        </article>
+        <article class="role-card reveal delay-2">
+          <span class="role-no">C</span><h3>算法重训练与优化</h3>
+          <p>整理五特征训练路线，采用受试者级数据划分；同时将 MATLAB 模型封装为服务器可调用程序，统一输入输出与错误处理。</p>
+          <ul><li>特征工程 / PyTorch</li><li>MATLAB Runtime</li><li>部署管线优化</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="product section-pad" id="product">
+      <div class="section-heading reveal">
+        <span class="section-index">03 / PRODUCT</span>
+        <h2>把复杂链路，收进一个清晰的 App。</h2>
+        <p>现役 App 已通过 H5 开发编译。以下界面依据项目实际页面与交互重现，数值为展示数据，不代表医学验证结论。</p>
+      </div>
+      <div class="phone-stage reveal delay-1">
+        <div class="phone phone-main">
+          <div class="phone-top"><span>9:41</span><span>● ● ●</span></div>
+          <div class="app-screen">
+            <div class="app-greeting"><small>下午好，陈一丹</small><strong>今日健康概览</strong></div>
+            <div class="device-pill"><i></i> 设备 ESP32_001 · 已连接</div>
+            <div class="metric-grid">
+              <div><span>♥</span><small>心率</small><strong>72</strong><em>bpm</em></div>
+              <div><span>⌁</span><small>血压</small><strong>118/76</strong><em>mmHg</em></div>
+              <div><span>◌</span><small>血氧</small><strong>98</strong><em>% · 演示</em></div>
+            </div>
+            <div class="mini-panel"><div><strong>最近 24 小时</strong><small>12 次记录</small></div><svg viewBox="0 0 300 95"><path d="M0 67 C22 53 34 74 53 60 S86 45 103 57 S135 69 151 48 S184 29 201 45 S235 62 252 38 S280 24 300 31"></path></svg></div>
+            <div class="app-link"><span>∿</span><div><strong>查看原始波形</strong><small>原始信号与滤波结果</small></div><b>›</b></div>
+            <div class="tabbar"><span class="active">⌂<small>首页</small></span><span>＋<small>健康</small></span><span>↗<small>趋势</small></span><span>○<small>我的</small></span></div>
+          </div>
+        </div>
+        <div class="phone phone-secondary">
+          <div class="phone-top"><span>9:41</span><span>● ● ●</span></div>
+          <div class="app-screen trend-screen">
+            <div class="app-greeting"><small>历史趋势</small><strong>数据变化，一眼看清</strong></div>
+            <div class="range-tabs"><span>7 天</span><span class="active">30 天</span><span>全部</span></div>
+            <div class="trend-summary"><small>平均血压</small><strong>117 / 75</strong><span>较上周期稳定</span></div>
+            <svg class="large-chart" viewBox="0 0 300 190"><g><path d="M0 25H300M0 75H300M0 125H300M0 175H300"></path></g><path class="area" d="M0 142 C26 130 38 151 62 120 S103 91 126 111 S161 131 181 85 S225 72 247 89 S276 51 300 63 L300 190 L0 190Z"></path><path class="line" d="M0 142 C26 130 38 151 62 120 S103 91 126 111 S161 131 181 85 S225 72 247 89 S276 51 300 63"></path></svg>
+            <div class="history-row"><span>10 / 12</span><strong>121 / 78</strong><small>70 bpm</small></div>
+            <div class="history-row"><span>10 / 11</span><strong>116 / 73</strong><small>74 bpm</small></div>
+            <div class="history-row"><span>10 / 10</span><strong>119 / 75</strong><small>71 bpm</small></div>
+          </div>
+        </div>
+        <div class="product-notes">
+          <span class="vertical-label">SELECTED SCREENS</span>
+          <div><strong>健康总览</strong><p>将设备状态、核心指标、短期趋势和原始波形入口放在同一条用户路径。</p></div>
+          <div><strong>历史趋势</strong><p>按时间范围查看真实数据库记录，并支持中英文界面切换。</p></div>
+          <div class="honesty-note"><b>工程边界</b><p>当前为科研原型；血氧仍是占位数据，袖带真值采集链路尚未完全接通，网站不将其包装成医疗产品。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hardware section-pad">
+      <div class="hardware-copy reveal">
+        <span class="section-index">04 / HARDWARE</span>
+        <h2>从桌面原型，<br>到可采集的系统。</h2>
+        <p>仓库保留 STM32F4、ADS8688 和 ESP32 工程，以及 Altium 原理图和 PCB 源文件。原型完成了传感、采集、传输和服务器接入的实物联调。</p>
+        <dl>
+          <div><dt>采集</dt><dd>STM32F407 + ADS8688</dd></div>
+          <div><dt>通信</dt><dd>ESP32 / HTTP 上传</dd></div>
+          <div><dt>工程资料</dt><dd>.SchDoc / .PcbDoc / 固件</dd></div>
+        </dl>
+      </div>
+      <div class="hardware-gallery reveal delay-1">
+        <figure class="prototype-wide"><img src="./assets/hardware-prototype.jpg" alt="打开外壳后的硬件采集原型，展示传感板、主控板与连接线"><figcaption>硬件原型内部结构</figcaption></figure>
+        <figure class="prototype-detail"><img src="./assets/measurement-demo.jpg" alt="手指放置在光电传感区域进行实际测量"><figcaption>手指测量过程</figcaption></figure>
+        <figure class="board-detail"><img src="./assets/sensor-board-front.jpg" alt="光电采集板正面元器件与接口特写"><figcaption>光电采集板 · 器件面</figcaption></figure>
+        <figure class="board-detail"><img src="./assets/controller-board.jpg" alt="主控板正面，包含主控芯片、存储卡槽和多路接口"><figcaption>主控与通信板 · 器件面</figcaption></figure>
+        <figure class="board-detail board-stack"><img src="./assets/board-stack.jpg" alt="主控板与接口板通过铜柱堆叠装配"><figcaption>板间堆叠与结构装配</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="engineering section-pad">
+      <div class="section-heading reveal">
+        <span class="section-index">05 / ENGINEERING</span>
+        <h2>最有价值的工作，<br>往往发生在“接起来”之后。</h2>
+      </div>
+      <div class="decision-list">
+        <article class="reveal"><span>01</span><div><h3>让设备重传不再产生重复测量</h3><p>对设备编号与完整帧哈希进行短期去重，同时保持 HTTP 200 确认，避免发送端持续重试。</p></div><b>RELIABILITY</b></article>
+        <article class="reveal"><span>02</span><div><h3>把 MATLAB 模型变成服务器能力</h3><p>使用 Python 作为输入、进程和输出桥梁，串行调度编译后的模型程序，隔离临时文件与运行时资源。</p></div><b>DEPLOYMENT</b></article>
+        <article class="reveal"><span>03</span><div><h3>重训练按受试者划分，而不是随机拆行</h3><p>避免同一受试者数据同时进入训练集与验证集，减少数据泄漏带来的虚高结果。</p></div><b>ML PRACTICE</b></article>
+        <article class="reveal"><span>04</span><div><h3>主动标出系统尚未完成的边界</h3><p>审计并记录兜底预测、血氧占位和真值链路缺口，为下一阶段实验留下可信基线。</p></div><b>INTEGRITY</b></article>
+      </div>
+    </section>
+
+    <section class="honors section-pad" id="honors">
+      <div class="section-heading inverse reveal">
+        <span class="section-index">06 / HONORS</span>
+        <h2>成果，有据可查。<br>进展，如实表达。</h2>
+      </div>
+      <div class="honor-layout">
+        <button class="certificate reveal" type="button" aria-label="放大全国大学生光电设计竞赛一等奖证书">
+          <img src="./assets/optoelectronics-first-prize.jpg" alt="第十四届全国大学生光电设计竞赛华北区赛一等奖证书">
+          <span>点击查看证书</span>
+        </button>
+        <div class="honor-copy reveal delay-1">
+          <article><span class="honor-year">2026</span><div><small>AWARD</small><h3>第十四届全国大学生光电设计竞赛<br>华北区赛 · 一等奖</h3><p>团队：陈一丹、张博涵、蒙金涛｜指导教师：赵宇</p></div></article>
+          <article><span class="honor-year">进行中</span><div><small>INNOVATION PROJECT</small><h3>全国大学生创新创业项目<br>成功立项</h3><p>项目当前仍在实施阶段，尚未结题。</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing section-pad">
+      <p class="reveal">我关心的不只是“算法能跑”，而是信号如何被可靠采集、计算、存储，并最终成为用户能理解的产品。</p>
+      <div class="closing-links reveal delay-1">
+        <a href="https://github.com/chenyidan2006/-app" target="_blank" rel="noreferrer">App & Server Pipeline ↗</a>
+        <a href="https://github.com/chenyidan2006/health-backend" target="_blank" rel="noreferrer">Backend & Database ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>陈一丹 · PPG 血管参数监测系统</span><span>Research prototype · 2026</span></footer>
+
+  <dialog class="lightbox"><button type="button" aria-label="关闭证书大图">×</button><img src="./assets/optoelectronics-first-prize.jpg" alt="一等奖证书大图"></dialog>
+  <script src="./script.js"></script>
+</body>
+</html>
