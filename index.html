@@ -218,8 +218,15 @@
         <div><strong>5 → 2</strong><span>五项时序特征预测 SBP / DBP</span></div>
       </div>
       <div class="algo-visuals">
-        <figure class="reveal" data-lightbox><img loading="lazy" src="./assets/algorithm-summary.png" alt="五特征血压模型训练数据汇总表"><figcaption><b>训练数据审计汇总</b><span>记录来源、受试者、会话和排除状态均可追溯</span></figcaption></figure>
-        <figure class="reveal delay-1 wide-data" data-lightbox><img loading="lazy" src="./assets/algorithm-training-data.png" alt="五特征模型训练数据明细表"><figcaption><b>标准化训练表</b><span>五个时序特征、心率与 SBP/DBP 真值统一到一张表</span></figcaption></figure>
+        <div class="audit-board reveal">
+          <div class="audit-title"><b>训练数据审计汇总</b><span>公开版已移除受试者姓名与逐条生理数据</span></div>
+          <div class="audit-table"><span>数据层级</span><span>检查内容</span><span>处理结果</span><b>受试者</b><p>身份隔离、跨集合重复</p><em>按 subject_id 划分</em><b>采集会话</b><p>来源文件、采集批次</p><em>保留 session_id</em><b>脉搏周期</b><p>缺失、范围、重复值</p><em>逐行质量标记</em></div>
+        </div>
+        <div class="feature-board reveal delay-1">
+          <div class="audit-title"><b>五特征标准化结构</b><span>不公开真实受试者明细</span></div>
+          <div class="feature-flow"><span>峰间隔</span><i>+</i><span>特征 1→2</span><i>+</i><span>特征 2→3</span><i>+</i><span>特征 3→下一周期</span><i>+</i><span>心率</span></div>
+          <div class="model-output"><small>MODEL INPUT</small><strong>5 个时序与心率特征</strong><b>→</b><small>MODEL OUTPUT</small><strong>SBP / DBP（mmHg）</strong></div>
+        </div>
       </div>
       <div class="algo-process">
         <article class="reveal"><span>01</span><h3>恢复与清洗</h3><p>统一旧工作簿中不一致的字段区域，检查缺失值、生理范围和完全重复记录，同时保留来源工作簿、行号与清洗结果。</p></article>
