@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 
-$repoName = 'ppg-vascular-portfolio'
+$repoName = 'laser-self-mixing-vascular-portfolio'
 $credentialRequest = "protocol=https`nhost=github.com`n`n"
 $credentialLines = $credentialRequest | git credential fill
 $credential = @{}

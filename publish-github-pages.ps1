@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 
-$repoName = 'ppg-vascular-portfolio'
-$description = 'PPG vascular parameter monitoring system portfolio'
+$repoName = 'laser-self-mixing-vascular-portfolio'
+$description = 'Laser self-mixing interferometry vascular parameter monitoring portfolio'
 $credentialRequest = "protocol=https`nhost=github.com`n`n"
 $credentialLines = $credentialRequest | git credential fill
 $credential = @{}
@@ -57,7 +57,7 @@ if ($existingRemote) {
 git add .openai README.md dist publish-github-pages.ps1
 $changes = git status --porcelain
 if ($changes) {
-    git commit -m 'Publish PPG project portfolio'
+    git commit -m 'Publish SMI project portfolio'
 }
 git branch -M main
 git push -u origin main

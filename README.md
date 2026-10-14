@@ -1,9 +1,9 @@
-# PPG 项目面试展示站
+# SMI 血管参数测量项目面试展示站
 
 静态成品位于 `dist/`，内容依据项目现役 App、服务器链路、硬件照片、奖项证书和代码审计整理。
 
-- 公开网站：https://chenyidan2006.github.io/ppg-vascular-portfolio/
-- 源码仓库：https://github.com/chenyidan2006/ppg-vascular-portfolio
+- 公开网站：https://chenyidan2006.github.io/laser-self-mixing-vascular-portfolio/
+- 源码仓库：https://github.com/chenyidan2006/laser-self-mixing-vascular-portfolio
 
 本地预览：
 
