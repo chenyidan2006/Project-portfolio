@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="基于 PPG 信号的血管参数监测系统——陈一丹项目作品集">
+  <meta name="description" content="基于激光自混合干涉（SMI）的血管参数测量系统——陈一丹项目作品集">
   <meta name="theme-color" content="#0b1720">
-  <title>PPG 血管参数监测系统｜陈一丹</title>
+  <title>SMI 血管参数测量系统｜陈一丹</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="返回顶部">
       <span class="brand-pulse" aria-hidden="true"></span>
-      <span>PPG / VASCULAR</span>
+      <span>SMI / VASCULAR</span>
     </a>
     <nav aria-label="页面导航">
       <a href="#system">系统</a>
@@ -34,10 +34,10 @@
       <div class="hero-copy reveal">
         <div class="eyebrow"><span>RESEARCH PROTOTYPE</span><span>2026</span></div>
         <h1>让一束光，<br><em>读懂脉搏。</em></h1>
-        <p class="hero-lead">基于 PPG 信号的血管参数监测系统，从光电采集、嵌入式通信，到模型推理、数据库与移动 App 的完整工程链路。</p>
+        <p class="hero-lead">基于激光自混合干涉（SMI）的无袖带血管参数测量系统，从微振信号采集、嵌入式通信，到模型推理、数据库与移动 App 的完整工程链路。</p>
         <div class="hero-actions">
           <a class="button primary" href="#system">查看完整链路</a>
-          <a class="button secondary" href="https://github.com/chenyidan2006/-app" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a class="button secondary" href="https://github.com/chenyidan2006/laser-self-mixing-vascular-monitoring" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
         <div class="identity-line">
           <span>陈一丹</span>
@@ -46,16 +46,16 @@
       </div>
       <div class="hero-visual reveal delay-1">
         <figure class="hero-photo">
-          <img src="./assets/measurement-demo.jpg" alt="使用光电采集原型进行手指测量">
-          <figcaption><span>01</span>光电采集原型 · 实际测量</figcaption>
+          <img src="./assets/measurement-demo.jpg" alt="使用激光自混合干涉采集原型进行测量演示">
+          <figcaption><span>01</span>SMI 采集原型 · 实际测量</figcaption>
         </figure>
-        <div class="signal-card" aria-label="PPG 信号动画示意">
+        <div class="signal-card" aria-label="SMI 信号动画示意">
           <span>LIVE SIGNAL</span>
           <svg viewBox="0 0 480 120" role="img" aria-label="脉搏波形示意">
             <path class="grid-line" d="M0 30H480M0 60H480M0 90H480"></path>
             <path class="pulse-line" pathLength="1" d="M0 76 C24 75 35 74 49 72 C60 70 67 49 77 45 C86 42 93 59 101 67 C110 76 115 76 128 75 C146 74 153 73 163 71 C178 68 181 27 194 20 C206 15 214 53 226 67 C236 77 245 77 262 75 C281 74 289 72 300 69 C314 65 320 37 330 32 C343 26 350 55 362 67 C373 77 382 77 400 75 C422 74 435 72 448 69 C458 67 468 62 480 61"></path>
           </svg>
-          <div><strong>PPG</strong><small>双通道采集 / 服务端推理</small></div>
+          <div><strong>SMI</strong><small>双通道采集 / 服务端推理</small></div>
         </div>
       </div>
     </section>
@@ -71,11 +71,11 @@
       <div class="overview-lead reveal">
         <span class="section-index">PROJECT SNAPSHOT</span>
         <h2>这是一个从实验台走到手机端的完整项目。</h2>
-        <p>项目目标不是只做一个预测模型，而是把光电信号真正采下来、传上去、算出来、存下来，再用普通用户能理解的方式展示出来。我负责应用与服务端、ESP32 到服务器通信，以及算法重训练和部署优化。</p>
+        <p>项目目标不是只做一个预测模型，而是把 SMI 信号真正采下来、传上去、算出来、存下来，再用普通用户能理解的方式展示出来。我负责应用与服务端、ESP32 到服务器通信，以及算法重训练和部署优化。</p>
       </div>
       <div class="fact-sheet reveal delay-1">
-        <article><small>要解决的问题</small><h3>无创、连续地理解脉搏波</h3><p>利用 PPG 光电容积脉搏波提取时序特征，探索血压与心率等参数的非侵入式估计。</p></article>
-        <article><small>系统形态</small><h3>硬件 + 云端 + App</h3><p>采集板与主控完成信号获取，ESP32 上传数据，服务器调用算法并保存结果，App 负责账户、设备和趋势查看。</p></article>
+        <article><small>测量原理</small><h3>用激光反馈感知桡动脉微振</h3><p>动脉壁微弱形变改变激光外腔长度，反馈光返回激光腔形成自混合干涉信号，再从时频特征估计血压与心率。</p></article>
+        <article><small>理论来源</small><h3>从论文方法到工程产品</h3><p>以 Zhao 等人 2024 年 SMI 可穿戴传感论文及后续 RSAF、SA-CNN 研究为基础，完成采集、联网、部署、数据库和 App 产品化。</p></article>
         <article><small>我的职责</small><h3>跨三层完成工程闭环</h3><p>独立完成 App 前后端；打通 ESP32 上传；整理训练数据、重训练模型，并优化服务器算法调用方式。</p></article>
         <article><small>当前状态</small><h3>科研原型，持续迭代</h3><p>已完成比赛展示和项目立项所需的端到端原型；仍需扩大真实真值样本并完成创新项目结题。</p></article>
       </div>
@@ -88,7 +88,7 @@
         <p>设备采集的二进制波形经过帧校验与去重，进入模型推理，再由后端持久化并提供给 App。每一层都有可独立部署的入口。</p>
       </div>
       <div class="pipeline reveal delay-1">
-        <article><span class="node-number">01</span><div class="node-icon">◎</div><h3>光电采集</h3><p>传感模块与 ADS8688 完成双通道采样。</p><small>OPTICS / ADC</small></article>
+        <article><span class="node-number">01</span><div class="node-icon">◎</div><h3>SMI 采集</h3><p>激光传感模块与 ADS8688 完成双通道采样。</p><small>LASER / ADC</small></article>
         <i aria-hidden="true">→</i>
         <article><span class="node-number">02</span><div class="node-icon">⌁</div><h3>嵌入式通信</h3><p>ESP32 组织数据帧并向服务器可靠上传。</p><small>ESP32 / HTTP</small></article>
         <i aria-hidden="true">→</i>
@@ -127,7 +127,7 @@
       <div class="section-heading reveal">
         <span class="section-index">03 / PRODUCT</span>
         <h2>把复杂链路，收进一个清晰的 App。</h2>
-        <p>现役 App 已通过 H5 开发编译。以下界面依据项目实际页面与交互重现，数值为展示数据，不代表医学验证结论。</p>
+        <p>现役 App 已具备完整页面与交互。以下界面依据项目实际代码与运行截图整理，数值为展示数据，不代表医学验证结论。</p>
       </div>
       <div class="phone-stage reveal delay-1">
         <div class="phone phone-main">
@@ -196,11 +196,11 @@
       </div>
       <div class="hardware-gallery reveal delay-1">
         <figure class="prototype-wide" data-lightbox><img src="./assets/hardware-prototype.jpg" alt="打开外壳后的硬件采集原型，展示传感板、主控板与连接线"><figcaption>硬件原型内部结构</figcaption></figure>
-        <figure class="prototype-detail" data-lightbox><img src="./assets/measurement-demo.jpg" alt="手指放置在光电传感区域进行实际测量"><figcaption>手指测量过程</figcaption></figure>
-        <figure class="board-detail" data-lightbox><img src="./assets/sensor-board-front.jpg" alt="光电采集板正面元器件与接口特写"><figcaption>光电采集板 · 器件面</figcaption></figure>
+        <figure class="prototype-detail" data-lightbox><img src="./assets/measurement-demo.jpg" alt="使用 SMI 传感区域进行实际测量演示"><figcaption>SMI 测量过程</figcaption></figure>
+        <figure class="board-detail" data-lightbox><img src="./assets/sensor-board-front.jpg" alt="SMI 信号采集板正面元器件与接口特写"><figcaption>SMI 采集板 · 器件面</figcaption></figure>
         <figure class="board-detail" data-lightbox><img src="./assets/controller-board.jpg" alt="主控板正面，包含主控芯片、存储卡槽和多路接口"><figcaption>主控与通信板 · 器件面</figcaption></figure>
         <figure class="board-detail board-stack" data-lightbox><img src="./assets/board-stack.jpg" alt="主控板与接口板通过铜柱堆叠装配"><figcaption>板间堆叠与结构装配</figcaption></figure>
-        <figure class="board-detail" data-lightbox><img src="./assets/sensor-board-back.jpg" alt="光电采集板背面与光学安装位置"><figcaption>光电采集板 · 光学安装面</figcaption></figure>
+        <figure class="board-detail" data-lightbox><img src="./assets/sensor-board-back.jpg" alt="SMI 信号采集板背面与激光安装位置"><figcaption>SMI 采集板 · 激光安装面</figcaption></figure>
         <figure class="board-detail" data-lightbox><img src="./assets/interface-board.jpg" alt="多路同轴接口与排线接口板"><figcaption>多路接口板 · 信号连接</figcaption></figure>
       </div>
     </section>
@@ -209,7 +209,7 @@
       <div class="section-heading reveal">
         <span class="section-index">05 / ALGORITHM</span>
         <h2>重训练不是“再跑一次”，<br>而是先把数据变可信。</h2>
-        <p>我重新梳理了五特征训练数据的来源、字段和质量状态，把旧表恢复成可追溯训练集，并将验证方式改为按受试者划分，降低同一人的脉搏周期同时出现在训练与测试中的数据泄漏风险。</p>
+        <p>在 SMI 论文算法与后续 RSAF 时频增强、SA-CNN 研究基础上，我重新梳理五特征训练数据的来源、字段和质量状态，把旧表恢复成可追溯训练集，并将验证方式改为按受试者划分，降低同一人的脉搏周期同时出现在训练与测试中的数据泄漏风险。</p>
       </div>
       <div class="algo-stats reveal delay-1">
         <div><strong>1005</strong><span>有效脉搏周期记录</span></div>
@@ -305,13 +305,13 @@
     <section class="closing section-pad">
       <p class="reveal">我关心的不只是“算法能跑”，而是信号如何被可靠采集、计算、存储，并最终成为用户能理解的产品。</p>
       <div class="closing-links reveal delay-1">
-        <a href="https://github.com/chenyidan2006/-app" target="_blank" rel="noreferrer">App & Server Pipeline ↗</a>
+        <a href="https://github.com/chenyidan2006/laser-self-mixing-vascular-monitoring" target="_blank" rel="noreferrer">App & Server Pipeline ↗</a>
         <a href="https://github.com/chenyidan2006/health-backend" target="_blank" rel="noreferrer">Backend & Database ↗</a>
       </div>
     </section>
   </main>
 
-  <footer><span>陈一丹 · PPG 血管参数监测系统</span><span>Research prototype · 2026</span></footer>
+  <footer><span>陈一丹 · SMI 血管参数测量系统</span><span>Research prototype · 2026</span></footer>
 
   <dialog class="lightbox"><button type="button" aria-label="关闭证书大图">×</button><img src="./assets/optoelectronics-first-prize.jpg" alt="一等奖证书大图"></dialog>
   <script src="./script.js"></script>
