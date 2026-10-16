@@ -1,44 +1,63 @@
-# SMI 血管参数测量项目面试展示站
+# 陈一丹的工程项目作品集
 
-静态成品位于 `dist/`，内容依据项目现役 App、服务器链路、硬件照片、奖项证书和代码审计整理。
+北京工业大学 · 面向 IC 设计方向学习 · 设备通信、信号处理与机器人视觉项目实践。
 
-- 公开网站：https://chenyidan2006.github.io/laser-self-mixing-vascular-portfolio/
-- 源码仓库：https://github.com/chenyidan2006/laser-self-mixing-vascular-portfolio
+**当前学习状态：** 本学期开始学习 Verilog / SystemVerilog 和 FPGA，尚无独立 RTL / FPGA 项目。下面两个项目展示既有系统工程经历。
 
-本地预览：
+[个人首页](https://chenyidan2006.github.io/laser-self-mixing-vascular-portfolio/home.html) · [SMI 项目](https://chenyidan2006.github.io/laser-self-mixing-vascular-portfolio/) · [道路识别](https://chenyidan2006.github.io/laser-self-mixing-vascular-portfolio/road-recognition.html)
 
-```powershell
-python -m http.server 4173 --directory dist
+## 30 秒了解我的项目
+
+| 项目 | 我负责的部分 | 团队成果 | 深入阅读 |
+| --- | --- | --- | --- |
+| 激光自混合干涉（SMI）血管参数测量 | App 全部前后端、ESP32 到服务器通信、算法重训练与优化 | 光电设计竞赛华北区一等奖；国创项目进行中 | [技术证据](docs/PROJECT_EVIDENCE.md#smi) |
+| 城市道路识别深度学习小车 | 队长；U-Net 训练调参与 detect_line3.py 感知参数标定 | 第二十八届中国机器人及人工智能大赛全国总决赛，机器人应用赛（城市道路识别）三等奖 | [技术证据](docs/PROJECT_EVIDENCE.md#road) |
+
+![团队SMI原型原始实拍](dist/assets/hardware-prototype.jpg)
+
+## 可以从这些问题开始交流
+
+- SMI：40 kHz、16 bit 与 8 秒记录，怎样换算负载和串口带宽？如何区分采集、上传与模型输入时长？
+- 道路识别：分割掩膜怎样变成车道误差？如何调整滑动窗口？为什么不能将控制循环频率视为模型帧率？
+- IC 学习：将设备通信经历转化为 UART RX 与同步 FIFO 的设计规格，再补充 RTL、testbench 和 FPGA 验证。
+
+[面试准备提纲](docs/INTERVIEW.md) · [IC 实践计划（尚未完成）](docs/IC_LEARNING_PLAN.md)
+
+## 仓库内容
+
+```text
+ dist/                      静态网站、实物照片、证书与界面截图
+   home.html                个人首页
+   index.html               SMI 项目详情（保留旧网址）
+   road-recognition.html    城市道路识别详情
+   engineering.html         工程证据与IC学习方向
+ docs/                      事实依据、面试准备、学习计划与维护记录
+ scripts/check_site.py      本地页面、资源与锚点检查
+ .github/workflows/          网站静态检查
+ ASSET_CREDITS.md            图片来源与修饰说明
 ```
 
-奖项证书中的团队成员与指导教师姓名已获项目成员确认公开。网站中的 App 指标为界面演示数据，已明确标注，不代表医学验证结果。
+本仓库保存作品集网站。SMI 实现代码位于[独立项目仓库](https://github.com/chenyidan2006/laser-self-mixing-vascular-monitoring)。道路识别代码目前是本地历史资料，完整 ROS 环境、模型和数据集尚未整理为公开复现包。
 
-## 页面内容与维护
+## 本地查看
 
-2026-10-16 改为五段项目说明：理论与链路 → 个人职责 → 真实 App 使用路径 → 工程细节 → 成果与验证边界。移除模拟手机界面和装饰波形；主屏只保留四张真实 App 截图，其他截图与硬件细节可展开，所有图片可点击查看原图。
+使用 Python 3，无须安装前端依赖：
 
-事实口径：连续单通道 40 kHz、16 bit；1,152,000 baud 是 UART 通信速率；8 秒为 320,000 点、640,000 字节负载；降到 20 kHz 后时长仍为 8 秒，现役适配器取前 100,000 点作为 5 秒输入。帧头 `ch=2` 不表示当前有两个物理通道。未知模型精度不做宣传，MATLAB 源码和模型不放入展示站。
+```powershell
+python scripts/check_site.py
+python -m http.server 4173 --bind 127.0.0.1 --directory dist
+```
 
-网站仅展示项目，不连接真实用户数据库或设备。新增接口是否已部署、实验数据是否有效，不能凭截图推断。
+打开 http://127.0.0.1:4173/home.html 。`index.html` 仍为 SMI 项目详情，以兼容已有链接。
 
-### 小时汇总截图来源
+## 事实与验证范围
 
-`dist/assets/app-hour-current.png` 于 2026-10-16 重新运行当前 App 后截取，展示 `.hour-panel` 实际渲染结果，不是重绘界面。使用 390px 手机视口，截取完整汇总卡片（366×528），包括均值、指标切换、六个测量点与10分钟刻度。
+个人分工依据既有项目说明及参赛报告；代码行为依据本地历史快照，详见[证据说明](docs/PROJECT_EVIDENCE.md)。团队奖项不等于个人独立完成全部模块。网站不连接真实用户数据库或设备；App 截图为演示，不代表医学验证结果；未复现的准确率、FPS、通过率不作成果宣传。学习计划不计入完成经历。
 
-本地隔离预览提供6条合成测量记录，未访问或写入线上数据库；图中的71.5 bpm、118.8/76.3 mmHg、98.0%都是演示数据。旧 `app-hour.jpg` 已移除，历史版本可从Git提交中恢复。当前其他截图仍保留其原有采集时间，不声称所有截图均来自最新发布版本。
+素材的授权与处理方式保留于 [ASSET_CREDITS.md](ASSET_CREDITS.md)。第三方论文、照片和团队材料不自动授予代码开源许可。
 
-`main` 保存网站源文件，`gh-pages` 保存 `dist/` 的发布内容。后续部署保留发布分支历史，不需要删仓库或强制覆盖历史。
+## 维护与发布
 
-## 论文图文版（2026-10-16）
+`main` 保存网站源文件，`gh-pages` 保存 `dist/` 发布内容。更新前先检查页面、图片与链接，再按已有 GitHub Pages 配置发布，保留分支历史。
 
-补充原论文 Fig.1–3 与逐图解读，改为深蓝实物封面、三张实拍细节、论文图文双栏的项目案例布局，保留完整 App 使用路径和工程说明。论文图片不改曲线、坐标、网络结构，不把论文精度归为本项目结果。
-
-封面使用基于原始实拍的 AI 修饰版本，网页标明性质，点击封面直接打开未处理原图，器件与接线判断仍以原图和源码为准。素材来源、图号、修图范围及完整提示词见 [ASSET_CREDITS.md](ASSET_CREDITS.md)。
-
-## 个人首页与其他项目
-
-- `dist/home.html`：陈一丹个人作品集首页，展示SMI和城市道路识别两个项目。
-- `dist/index.html`：保留原SMI网址，顶部及底部均可返回个人首页。
-- `dist/road-recognition.html`：城市道路识别介绍页。获奖名称依据用户提供证书：第二十八届中国机器人及人工智能大赛全国总决赛，机器人应用赛（城市道路识别）三等奖，2026年7月。个人职责依据参赛技术报告第4.5.2节，只摘要U-Net训练调参与detectline参数调整；不直接承诺量化、剪枝等拓展条目均已验证。
-- 仅发布证书图片和概括性说明，不上传整个道路识别目录、完整技术报告、模型、代码或教师联系方式；未新建道路识别代码仓库。
-- `photo-layout.css`：最后加载的独立照片布局，给完整实拍保留空间，使用`object-fit:contain`而非裁切；样式URL附带版本，避免旧缓存使修改不生效。手机单列显示原始照片比例。
+历史页面维护说明见 [MAINTENANCE_HISTORY.md](docs/MAINTENANCE_HISTORY.md)。
