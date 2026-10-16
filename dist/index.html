@@ -3,317 +3,120 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="基于激光自混合干涉（SMI）的血管参数测量系统——陈一丹项目作品集">
-  <meta name="theme-color" content="#0b1720">
-  <title>SMI 血管参数测量系统｜陈一丹</title>
+  <meta name="description" content="陈一丹的激光自混合干涉（SMI）血管参数测量项目：理论依据、个人工作、真实 App 界面与工程实现。">
+  <meta name="theme-color" content="#132c32">
+  <meta name="portfolio-version" content="2026-10-16-editorial">
+  <title>激光自混合干涉血管参数测量｜陈一丹</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#content">跳到正文</a>
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="返回顶部">
-      <span class="brand-pulse" aria-hidden="true"></span>
-      <span>SMI / VASCULAR</span>
-    </a>
-    <nav aria-label="页面导航">
-      <a href="#system">系统</a>
-      <a href="#work">我的工作</a>
-      <a href="#product">产品</a>
-      <a href="#algorithm">算法</a>
-      <a href="#database">数据</a>
-      <a href="#honors">成果</a>
-    </nav>
-    <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav">菜单</button>
+    <a class="brand" href="#top">陈一丹 <span>/ SMI 项目</span></a>
+    <nav aria-label="项目目录"><a href="#theory">理论与链路</a><a href="#work">我的工作</a><a href="#app">真实界面</a><a href="#engineering">工程细节</a><a href="#outcome">成果与边界</a></nav>
   </header>
-
-  <div class="mobile-nav" id="mobile-nav" hidden>
-    <a href="#system">系统</a><a href="#work">我的工作</a><a href="#product">产品</a><a href="#algorithm">算法</a><a href="#database">数据</a><a href="#honors">成果</a>
-  </div>
-
-  <main id="top">
-    <section class="hero section-pad">
-      <div class="hero-copy reveal">
-        <div class="eyebrow"><span>RESEARCH PROTOTYPE</span><span>2026</span></div>
-        <h1>让一束光，<br><em>读懂脉搏。</em></h1>
-        <p class="hero-lead">基于激光自混合干涉（SMI）的无袖带血管参数测量系统，从微振信号采集、嵌入式通信，到模型推理、数据库与移动 App 的完整工程链路。</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#system">查看完整链路</a>
-          <a class="button secondary" href="https://github.com/chenyidan2006/laser-self-mixing-vascular-monitoring" target="_blank" rel="noreferrer">GitHub ↗</a>
-        </div>
-        <div class="identity-line">
-          <span>陈一丹</span>
-          <span>App 全栈 · 嵌入式通信 · 算法优化</span>
-        </div>
+  <main id="content">
+    <section class="hero wrap" id="top">
+      <div>
+        <p class="eyebrow">研究方法的工程化 / 项目作品集</p>
+        <h1>激光自混合干涉<br>血管参数测量系统</h1>
+        <p class="intro">将桡动脉微振信号的研究方法，接入一套能采集、上传、推理、存储和回看的移动端原型。</p>
+        <p class="byline">我负责 <strong>App 全部前后端、ESP32 与服务器通信、算法重训练和优化改进</strong>。光学传感方案与原始研究方法来自老师及团队研究，我的工作重点是把它们接成可使用、可追溯的系统。</p>
+        <p class="honor-line">光电设计竞赛华北区一等奖 <span>·</span> 国创项目已立项，尚未结题</p>
+        <div class="links"><a class="solid" href="#work">看我的具体工作 ↓</a><a href="https://github.com/chenyidan2006/laser-self-mixing-vascular-monitoring" target="_blank" rel="noreferrer">项目代码 ↗</a></div>
       </div>
-      <div class="hero-visual reveal delay-1">
-        <figure class="hero-photo">
-          <img src="./assets/measurement-demo.jpg" alt="使用激光自混合干涉采集原型进行测量演示">
-          <figcaption><span>01</span>SMI 采集原型 · 实际测量</figcaption>
+      <figure class="hero-photo">
+        <button class="image-button" data-lightbox type="button" aria-label="放大采集原型实物照片"><img src="./assets/hardware-prototype.jpg" width="1707" height="1280" alt="项目实物：白色外壳内的激光传感板、主控板和飞线连接"></button>
+        <figcaption>团队原型实拍 · 激光传感与采集板。ESP32 开发板通过飞线接入，未在此图中完整展示。</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter wrap" id="theory" aria-labelledby="theory-title">
+      <div class="chapter-title"><span class="number">01</span><div><p class="eyebrow">先说清楚测量依据</p><h2 id="theory-title">从动脉微振，到可以分析的数字信号</h2></div></div>
+      <div class="theory-grid">
+        <div class="prose">
+          <h3>测量的不是血液吸光，而是激光反馈的变化</h3>
+          <p>桡动脉搏动会引起体表微小运动，改变激光器与目标之间的外腔光程。目标反射或散射的光返回激光腔，与腔内光场发生自混合，使输出信号随之变化。这就是本项目使用的激光自混合干涉（SMI），不是 PPG 光电容积脉搏波。</p>
+          <p>原始 SMI 波形不等于已经恢复好的脉搏波，更不能直接当作血压值。它需要经过信号解析、脉搏相关信息提取，再进入模型估计收缩压、舒张压等参数；光学信号质量、解析方法与训练数据都会影响结果。</p>
+          <h3>研究基础与我的实现，是两件不同的事</h3>
+          <p>项目依据 Zhao 等人 2024 年的无袖带 SMI 传感研究，以及学长关于 RSAF 时频域 LSMI 信号解析与自注意力网络的毕业论文。前者提供传感与血压测量的研究基础，后者围绕信号解析和学习方法展开；它们不是我个人提出的新理论。</p>
+          <p>我的任务是沿这条研究路线做产品化：完成从二进制采集数据到服务器模型输入的转换，接通 App 和数据库，并整理重训练流程、修正解析错误，让一次测量可以被回看和排查。</p>
+          <a class="text-link" href="https://doi.org/10.1364/OE.534566" target="_blank" rel="noreferrer">理论来源：Zhao 等，Optics Express，2024 ↗</a>
+        </div>
+        <figure class="measurement">
+          <button class="image-button" data-lightbox type="button" aria-label="放大测量过程实拍"><img loading="lazy" src="./assets/measurement-demo.jpg" width="1280" height="960" alt="团队实验中传感区域与测量目标的位置关系实拍"></button>
+          <figcaption>测量过程实拍。照片用于说明传感原型与实验操作，不作为精度证明。</figcaption>
+          <dl class="parameters"><div><dt>实际采集</dt><dd>单通道 · 40 kHz · 16 bit</dd></div><div><dt>串口传输</dt><dd>1,152,000 baud</dd></div><div><dt>模型输入采样率</dt><dd>20 kHz（与采集速率区分）</dd></div></dl>
         </figure>
-        <div class="signal-card" aria-label="SMI 信号动画示意">
-          <span>LIVE SIGNAL</span>
-          <svg viewBox="0 0 480 120" role="img" aria-label="脉搏波形示意">
-            <path class="grid-line" d="M0 30H480M0 60H480M0 90H480"></path>
-            <path class="pulse-line" pathLength="1" d="M0 76 C24 75 35 74 49 72 C60 70 67 49 77 45 C86 42 93 59 101 67 C110 76 115 76 128 75 C146 74 153 73 163 71 C178 68 181 27 194 20 C206 15 214 53 226 67 C236 77 245 77 262 75 C281 74 289 72 300 69 C314 65 320 37 330 32 C343 26 350 55 362 67 C373 77 382 77 400 75 C422 74 435 72 448 69 C458 67 468 62 480 61"></path>
-          </svg>
-          <div><strong>SMI</strong><small>双通道采集 / 服务端推理</small></div>
-        </div>
       </div>
-    </section>
-
-    <section class="proof-strip" aria-label="项目事实">
-      <div><strong>一等奖</strong><span>全国大学生光电设计竞赛 · 华北区</span></div>
-      <div><strong>1005</strong><span>现有五特征训练记录</span></div>
-      <div><strong>端到端</strong><span>硬件 → 云端 → 算法 → App</span></div>
-      <div><strong>进行中</strong><span>全国大学生创新创业项目</span></div>
-    </section>
-
-    <section class="overview section-pad">
-      <div class="overview-lead reveal">
-        <span class="section-index">PROJECT SNAPSHOT</span>
-        <h2>这是一个从实验台走到手机端的完整项目。</h2>
-        <p>项目目标不是只做一个预测模型，而是把 SMI 信号真正采下来、传上去、算出来、存下来，再用普通用户能理解的方式展示出来。我负责应用与服务端、ESP32 到服务器通信，以及算法重训练和部署优化。</p>
-      </div>
-      <div class="fact-sheet reveal delay-1">
-        <article><small>测量原理</small><h3>用激光反馈感知桡动脉微振</h3><p>动脉壁微弱形变改变激光外腔长度，反馈光返回激光腔形成自混合干涉信号，再从时频特征估计血压与心率。</p></article>
-        <article><small>理论来源</small><h3>从论文方法到工程产品</h3><p>以 Zhao 等人 2024 年 SMI 可穿戴传感论文及后续 RSAF、SA-CNN 研究为基础，完成采集、联网、部署、数据库和 App 产品化。</p></article>
-        <article><small>我的职责</small><h3>跨三层完成工程闭环</h3><p>独立完成 App 前后端；打通 ESP32 上传；整理训练数据、重训练模型，并优化服务器算法调用方式。</p></article>
-        <article><small>当前状态</small><h3>科研原型，持续迭代</h3><p>已完成比赛展示和项目立项所需的端到端原型；仍需扩大真实真值样本并完成创新项目结题。</p></article>
-      </div>
-    </section>
-
-    <section class="system section-pad" id="system">
-      <div class="section-heading reveal">
-        <span class="section-index">01 / SYSTEM</span>
-        <h2>不是单点 Demo，<br>是一条可运行的数据链路。</h2>
-        <p>设备采集的二进制波形经过帧校验与去重，进入模型推理，再由后端持久化并提供给 App。每一层都有可独立部署的入口。</p>
-      </div>
-      <div class="pipeline reveal delay-1">
-        <article><span class="node-number">01</span><div class="node-icon">◎</div><h3>SMI 采集</h3><p>激光传感模块与 ADS8688 完成双通道采样。</p><small>LASER / ADC</small></article>
-        <i aria-hidden="true">→</i>
-        <article><span class="node-number">02</span><div class="node-icon">⌁</div><h3>嵌入式通信</h3><p>ESP32 组织数据帧并向服务器可靠上传。</p><small>ESP32 / HTTP</small></article>
-        <i aria-hidden="true">→</i>
-        <article><span class="node-number">03</span><div class="node-icon">∿</div><h3>算法推理</h3><p>Python 调度 MATLAB 编译模型，输出血压与心率。</p><small>PYTHON / MATLAB</small></article>
-        <i aria-hidden="true">→</i>
-        <article><span class="node-number">04</span><div class="node-icon">▦</div><h3>应用闭环</h3><p>Express 与 MySQL 提供账户、设备和历史趋势。</p><small>API / DATABASE / APP</small></article>
-      </div>
-    </section>
-
-    <section class="work section-pad" id="work">
-      <div class="section-heading inverse reveal">
-        <span class="section-index">02 / MY ROLE</span>
-        <h2>我负责的，不止一个页面。</h2>
-        <p>个人工作覆盖应用层、设备到云端的传输层，以及算法训练与部署优化。下面只列实际承担的部分。</p>
-      </div>
-      <div class="role-grid">
-        <article class="role-card reveal">
-          <span class="role-no">A</span><h3>App 全栈开发</h3>
-          <p>完成 uni-app 前端、Node.js / Express 后端与 MySQL 数据设计，覆盖登录、设备绑定、健康总览、趋势、个人资料与双语界面。</p>
-          <ul><li>Vue 3 / uni-app</li><li>Express REST API</li><li>MySQL 数据模型</li></ul>
-        </article>
-        <article class="role-card reveal delay-1">
-          <span class="role-no">B</span><h3>ESP32 → 服务器</h3>
-          <p>打通二进制波形上传链路，完成帧格式校验、文件与元数据落盘、重复帧识别，以及算法任务的串行调度。</p>
-          <ul><li>HTTP Binary Frame</li><li>SHA-256 去重</li><li>可追溯元数据</li></ul>
-        </article>
-        <article class="role-card reveal delay-2">
-          <span class="role-no">C</span><h3>算法重训练与优化</h3>
-          <p>整理五特征训练路线，采用受试者级数据划分；同时将 MATLAB 模型封装为服务器可调用程序，统一输入输出与错误处理。</p>
-          <ul><li>特征工程 / PyTorch</li><li>MATLAB Runtime</li><li>部署管线优化</li></ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="product section-pad" id="product">
-      <div class="section-heading reveal">
-        <span class="section-index">03 / PRODUCT</span>
-        <h2>把复杂链路，收进一个清晰的 App。</h2>
-        <p>现役 App 已具备完整页面与交互。以下界面依据项目实际代码与运行截图整理，数值为展示数据，不代表医学验证结论。</p>
-      </div>
-      <div class="phone-stage reveal delay-1">
-        <div class="phone phone-main">
-          <div class="phone-top"><span>9:41</span><span>● ● ●</span></div>
-          <div class="app-screen">
-            <div class="app-greeting"><small>下午好，陈一丹</small><strong>今日健康概览</strong></div>
-            <div class="device-pill"><i></i> 设备 ESP32_001 · 已连接</div>
-            <div class="metric-grid">
-              <div><span>♥</span><small>心率</small><strong>72</strong><em>bpm</em></div>
-              <div><span>⌁</span><small>血压</small><strong>118/76</strong><em>mmHg</em></div>
-              <div><span>◌</span><small>血氧</small><strong>98</strong><em>% · 演示</em></div>
-            </div>
-            <div class="mini-panel"><div><strong>最近 24 小时</strong><small>12 次记录</small></div><svg viewBox="0 0 300 95"><path d="M0 67 C22 53 34 74 53 60 S86 45 103 57 S135 69 151 48 S184 29 201 45 S235 62 252 38 S280 24 300 31"></path></svg></div>
-            <div class="app-link"><span>∿</span><div><strong>查看原始波形</strong><small>原始信号与滤波结果</small></div><b>›</b></div>
-            <div class="tabbar"><span class="active">⌂<small>首页</small></span><span>＋<small>健康</small></span><span>↗<small>趋势</small></span><span>○<small>我的</small></span></div>
-          </div>
-        </div>
-        <div class="phone phone-secondary">
-          <div class="phone-top"><span>9:41</span><span>● ● ●</span></div>
-          <div class="app-screen trend-screen">
-            <div class="app-greeting"><small>历史趋势</small><strong>数据变化，一眼看清</strong></div>
-            <div class="range-tabs"><span>7 天</span><span class="active">30 天</span><span>全部</span></div>
-            <div class="trend-summary"><small>平均血压</small><strong>117 / 75</strong><span>较上周期稳定</span></div>
-            <svg class="large-chart" viewBox="0 0 300 190"><g><path d="M0 25H300M0 75H300M0 125H300M0 175H300"></path></g><path class="area" d="M0 142 C26 130 38 151 62 120 S103 91 126 111 S161 131 181 85 S225 72 247 89 S276 51 300 63 L300 190 L0 190Z"></path><path class="line" d="M0 142 C26 130 38 151 62 120 S103 91 126 111 S161 131 181 85 S225 72 247 89 S276 51 300 63"></path></svg>
-            <div class="history-row"><span>10 / 12</span><strong>121 / 78</strong><small>70 bpm</small></div>
-            <div class="history-row"><span>10 / 11</span><strong>116 / 73</strong><small>74 bpm</small></div>
-            <div class="history-row"><span>10 / 10</span><strong>119 / 75</strong><small>71 bpm</small></div>
-          </div>
-        </div>
-        <div class="product-notes">
-          <span class="vertical-label">SELECTED SCREENS</span>
-          <div><strong>健康总览</strong><p>将设备状态、核心指标、短期趋势和原始波形入口放在同一条用户路径。</p></div>
-          <div><strong>历史趋势</strong><p>按时间范围查看真实数据库记录，并支持中英文界面切换。</p></div>
-          <div class="honesty-note"><b>工程边界</b><p>当前为科研原型；血氧仍是占位数据，袖带真值采集链路尚未完全接通，网站不将其包装成医疗产品。</p></div>
-        </div>
-      </div>
-      <div class="actual-ui reveal">
-        <div class="actual-ui-heading">
-          <div><span>REAL PRODUCT SCREENS</span><h3>现役 App 的真实页面</h3></div>
-          <p>下面不是概念效果图，而是当前代码实际运行后的页面截图。功能覆盖测量波形、设备绑定、历史趋势、个人资料、目标管理与帮助说明。</p>
-        </div>
-        <div class="ui-gallery">
-          <figure class="ui-feature" data-lightbox><img loading="lazy" src="./assets/app-waveform.jpg" alt="App 测量信号分析页面，展示采样率、采样点数与滤波波形"><figcaption><b>01 / 信号分析</b><span>原始/滤波信号切换、完整波形与局部放大</span></figcaption></figure>
-          <figure data-lightbox><img loading="lazy" src="./assets/app-trend-month.jpg" alt="App 月度血压趋势页面"><figcaption><b>02 / 历史趋势</b><span>按日、周、月查看血压和最近记录</span></figcaption></figure>
-          <figure data-lightbox><img loading="lazy" src="./assets/app-device.jpg" alt="App 设备管理与绑定页面"><figcaption><b>03 / 设备管理</b><span>设备编号绑定、当前设备与在线状态</span></figcaption></figure>
-          <figure data-lightbox><img loading="lazy" src="./assets/app-hour.jpg" alt="App 一小时测量平均值与健康提示页面"><figcaption><b>04 / 小时汇总</b><span>离线记录保留、平均值和健康提示</span></figcaption></figure>
-          <figure data-lightbox><img loading="lazy" src="./assets/app-goals.jpg" alt="App 每日健康目标页面"><figcaption><b>05 / 每日目标</b><span>测量、饮水、运动与睡眠目标</span></figcaption></figure>
-          <figure data-lightbox><img loading="lazy" src="./assets/app-personal.jpg" alt="App 个人资料编辑页面"><figcaption><b>06 / 个人资料</b><span>基础资料与身体信息持久化</span></figcaption></figure>
-          <figure data-lightbox><img loading="lazy" src="./assets/app-help.jpg" alt="App 帮助与反馈页面"><figcaption><b>07 / 帮助反馈</b><span>常见问题、使用引导与本地反馈草稿</span></figcaption></figure>
-          <figure data-lightbox><img loading="lazy" src="./assets/app-profile.jpg" alt="App 个人中心功能菜单"><figcaption><b>08 / 个人中心</b><span>资料、设备、设置与版本入口</span></figcaption></figure>
-          <figure data-lightbox><img loading="lazy" src="./assets/app-about.jpg" alt="App 关于页面与功能说明"><figcaption><b>09 / 关于产品</b><span>科研原型定位与核心能力说明</span></figcaption></figure>
-        </div>
-      </div>
-    </section>
-
-    <section class="hardware section-pad">
-      <div class="hardware-copy reveal">
-        <span class="section-index">04 / HARDWARE</span>
-        <h2>从桌面原型，<br>到可采集的系统。</h2>
-        <p>仓库保留 STM32F4、ADS8688 和 ESP32 工程，以及 Altium 原理图和 PCB 源文件。原型完成了传感、采集、传输和服务器接入的实物联调。</p>
-        <dl>
-          <div><dt>采集</dt><dd>STM32F407 + ADS8688</dd></div>
-          <div><dt>通信</dt><dd>ESP32 / HTTP 上传</dd></div>
-          <div><dt>工程资料</dt><dd>.SchDoc / .PcbDoc / 固件</dd></div>
-        </dl>
-      </div>
-      <div class="hardware-gallery reveal delay-1">
-        <figure class="prototype-wide" data-lightbox><img src="./assets/hardware-prototype.jpg" alt="打开外壳后的硬件采集原型，展示传感板、主控板与连接线"><figcaption>硬件原型内部结构</figcaption></figure>
-        <figure class="prototype-detail" data-lightbox><img src="./assets/measurement-demo.jpg" alt="使用 SMI 传感区域进行实际测量演示"><figcaption>SMI 测量过程</figcaption></figure>
-        <figure class="board-detail" data-lightbox><img src="./assets/sensor-board-front.jpg" alt="SMI 信号采集板正面元器件与接口特写"><figcaption>SMI 采集板 · 器件面</figcaption></figure>
-        <figure class="board-detail" data-lightbox><img src="./assets/controller-board.jpg" alt="主控板正面，包含主控芯片、存储卡槽和多路接口"><figcaption>主控与通信板 · 器件面</figcaption></figure>
-        <figure class="board-detail board-stack" data-lightbox><img src="./assets/board-stack.jpg" alt="主控板与接口板通过铜柱堆叠装配"><figcaption>板间堆叠与结构装配</figcaption></figure>
-        <figure class="board-detail" data-lightbox><img src="./assets/sensor-board-back.jpg" alt="SMI 信号采集板背面与激光安装位置"><figcaption>SMI 采集板 · 激光安装面</figcaption></figure>
-        <figure class="board-detail" data-lightbox><img src="./assets/interface-board.jpg" alt="多路同轴接口与排线接口板"><figcaption>多路接口板 · 信号连接</figcaption></figure>
-      </div>
-    </section>
-
-    <section class="algorithm section-pad" id="algorithm">
-      <div class="section-heading reveal">
-        <span class="section-index">05 / ALGORITHM</span>
-        <h2>重训练不是“再跑一次”，<br>而是先把数据变可信。</h2>
-        <p>在 SMI 论文算法与后续 RSAF 时频增强、SA-CNN 研究基础上，我重新梳理五特征训练数据的来源、字段和质量状态，把旧表恢复成可追溯训练集，并将验证方式改为按受试者划分，降低同一人的脉搏周期同时出现在训练与测试中的数据泄漏风险。</p>
-      </div>
-      <div class="algo-stats reveal delay-1">
-        <div><strong>1005</strong><span>有效脉搏周期记录</span></div>
-        <div><strong>7</strong><span>受试者</span></div>
-        <div><strong>8</strong><span>测量会话</span></div>
-        <div><strong>5 → 2</strong><span>五项时序特征预测 SBP / DBP</span></div>
-      </div>
-      <div class="algo-visuals">
-        <div class="audit-board reveal">
-          <div class="audit-title"><b>训练数据审计汇总</b><span>公开版已移除受试者姓名与逐条生理数据</span></div>
-          <div class="audit-table"><span>数据层级</span><span>检查内容</span><span>处理结果</span><b>受试者</b><p>身份隔离、跨集合重复</p><em>按 subject_id 划分</em><b>采集会话</b><p>来源文件、采集批次</p><em>保留 session_id</em><b>脉搏周期</b><p>缺失、范围、重复值</p><em>逐行质量标记</em></div>
-        </div>
-        <div class="feature-board reveal delay-1">
-          <div class="audit-title"><b>五特征标准化结构</b><span>不公开真实受试者明细</span></div>
-          <div class="feature-flow"><span>峰间隔</span><i>+</i><span>特征 1→2</span><i>+</i><span>特征 2→3</span><i>+</i><span>特征 3→下一周期</span><i>+</i><span>心率</span></div>
-          <div class="model-output"><small>MODEL INPUT</small><strong>5 个时序与心率特征</strong><b>→</b><small>MODEL OUTPUT</small><strong>SBP / DBP（mmHg）</strong></div>
-        </div>
-      </div>
-      <div class="algo-process">
-        <article class="reveal"><span>01</span><h3>恢复与清洗</h3><p>统一旧工作簿中不一致的字段区域，检查缺失值、生理范围和完全重复记录，同时保留来源工作簿、行号与清洗结果。</p></article>
-        <article class="reveal delay-1"><span>02</span><h3>受试者级划分</h3><p>训练、验证、测试以 <code>subject_id</code> 为边界，而不是随机拆分单行数据；同一人的数据不会跨集合。</p></article>
-        <article class="reveal"><span>03</span><h3>双模型回归</h3><p>对 SBP、DBP 分别训练五特征 CNN + 自注意力回归模型，归一化参数只由训练受试者拟合。</p></article>
-        <article class="reveal delay-1"><span>04</span><h3>服务器可调用</h3><p>保留现役 MATLAB 编译模型，同时建立全 Python 重训练路线；由 Python 统一输入、进程调度、输出解析和异常处理。</p></article>
-      </div>
-      <p class="research-boundary reveal"><b>结果边界：</b>当前数据只有 7 名受试者，足以支撑工程流程验证，但不足以宣称临床泛化能力。网站只展示方法、数据治理与系统实现，不包装未经验证的准确率。</p>
-    </section>
-
-    <section class="database section-pad" id="database">
-      <div class="section-heading inverse reveal">
-        <span class="section-index">06 / DATABASE</span>
-        <h2>测量结果不只显示一次，<br>还要能够被查询和追溯。</h2>
-        <p>后端使用 Node.js / Express 与 MySQL。数据库初始化脚本、旧库迁移脚本和使用文档都已保留，覆盖用户、设备绑定、测量记录，以及后续扩展的健康记忆与对话记录。</p>
-      </div>
-      <div class="schema-grid reveal delay-1">
-        <article><div><strong>users</strong><small>账户与资料</small></div><ul><li>手机号 / 微信标识</li><li>昵称、性别、生日</li><li>身高、体重与登录时间</li></ul></article>
-        <i>1 — N</i>
-        <article><div><strong>user_devices</strong><small>设备关系</small></div><ul><li>用户与设备绑定</li><li>设备名称和在线状态</li><li>最后一次上传时间</li></ul></article>
-        <i>1 — N</i>
-        <article><div><strong>user_health_data</strong><small>测量事实表</small></div><ul><li>测量时间与设备编号</li><li>心率、收缩压、舒张压</li><li>血氧字段与创建时间</li></ul></article>
-      </div>
-      <div class="backend-flow reveal">
-        <div><span>01</span><h3>创建数据库</h3><p>执行 <code>database/init.sql</code> 创建核心表和外键；旧数据库通过迁移脚本补充设备状态及最后活跃时间字段。</p></div>
-        <div><span>02</span><h3>设备写入</h3><p>ESP32 帧经过接收服务校验与算法推理，后端将设备编号、测量时间和结果写入测量表，并刷新设备在线状态。</p></div>
-        <div><span>03</span><h3>App 查询</h3><p>JWT 鉴权后按用户、设备与日期范围读取数据，服务端完成小时聚合、日/月趋势和最近记录查询。</p></div>
-        <div><span>04</span><h3>安全边界</h3><p>密码使用哈希保存；数据库账号和 JWT 密钥通过环境变量配置，公开仓库不包含生产密钥和真实用户数据。</p></div>
-      </div>
-    </section>
-
-    <section class="engineering section-pad">
-      <div class="section-heading reveal">
-        <span class="section-index">07 / ENGINEERING</span>
-        <h2>最有价值的工作，<br>往往发生在“接起来”之后。</h2>
-      </div>
-      <div class="decision-list">
-        <article class="reveal"><span>01</span><div><h3>让设备重传不再产生重复测量</h3><p>对设备编号与完整帧哈希进行短期去重，同时保持 HTTP 200 确认，避免发送端持续重试。</p></div><b>RELIABILITY</b></article>
-        <article class="reveal"><span>02</span><div><h3>把 MATLAB 模型变成服务器能力</h3><p>使用 Python 作为输入、进程和输出桥梁，串行调度编译后的模型程序，隔离临时文件与运行时资源。</p></div><b>DEPLOYMENT</b></article>
-        <article class="reveal"><span>03</span><div><h3>重训练按受试者划分，而不是随机拆行</h3><p>避免同一受试者数据同时进入训练集与验证集，减少数据泄漏带来的虚高结果。</p></div><b>ML PRACTICE</b></article>
-        <article class="reveal"><span>04</span><div><h3>主动标出系统尚未完成的边界</h3><p>审计并记录兜底预测、血氧占位和真值链路缺口，为下一阶段实验留下可信基线。</p></div><b>INTEGRITY</b></article>
-      </div>
-    </section>
-
-    <section class="journey section-pad">
-      <div class="journey-intro reveal">
-        <span class="section-index">08 / ITERATION</span>
-        <h2>从“能演示”到“能解释、能维护”。</h2>
-        <p>这个项目经历过多套 App、算法编译方式和服务器脚本。最终整理时，我没有把所有历史版本都留在现役目录，而是以可部署链路为主线，保留必要的原始 MATLAB 算法和训练依据。</p>
-      </div>
-      <ol class="timeline">
-        <li class="reveal"><span>01</span><div><small>PRODUCT</small><h3>完成 App 前后端</h3><p>从登录、资料和设备绑定扩展到测量记录、历史趋势、波形分析、每日目标与中英文界面。</p></div></li>
-        <li class="reveal"><span>02</span><div><small>PIPELINE</small><h3>打通 ESP32 到服务器</h3><p>设计并验证二进制上传、帧完整性检查、重复测量识别、算法任务调度和结果回传。</p></div></li>
-        <li class="reveal"><span>03</span><div><small>MODEL</small><h3>重建训练与部署路径</h3><p>整理五特征数据集，建立按受试者划分的 Python 训练路线，同时保留服务器现役 MATLAB 编译模型。</p></div></li>
-        <li class="reveal"><span>04</span><div><small>DELIVERY</small><h3>形成可交付项目</h3><p>统一目录、数据库说明、部署脚本和版本记录，并用真实截图、硬件照片与奖项证书形成可核验作品集。</p></div></li>
+      <ol class="signal-path" aria-label="测量数据链路">
+        <li><b>采下来</b><span>激光头 → ADS8688 / STM32<br>把模拟信号变成连续采样点</span></li>
+        <li><b>传上去</b><span>串口 → ESP32 → HTTP<br>组织帧、上传并保留原始文件</span></li>
+        <li><b>算出来</b><span>服务器解析 → 算法调用<br>对齐采样率，输出估计结果</span></li>
+        <li><b>存下并回看</b><span>Express / MySQL → App<br>按设备与时间查询记录、波形</span></li>
       </ol>
     </section>
 
-    <section class="honors section-pad" id="honors">
-      <div class="section-heading inverse reveal">
-        <span class="section-index">09 / HONORS</span>
-        <h2>成果，有据可查。<br>进展，如实表达。</h2>
-      </div>
-      <div class="honor-layout">
-        <button class="certificate reveal" type="button" aria-label="放大全国大学生光电设计竞赛一等奖证书">
-          <img src="./assets/optoelectronics-first-prize.jpg" alt="第十四届全国大学生光电设计竞赛华北区赛一等奖证书">
-          <span>点击查看证书</span>
-        </button>
-        <div class="honor-copy reveal delay-1">
-          <article><span class="honor-year">2026</span><div><small>AWARD</small><h3>第十四届全国大学生光电设计竞赛<br>华北区赛 · 一等奖</h3><p>团队：陈一丹、张博涵、蒙金涛｜指导教师：赵宇</p></div></article>
-          <article><span class="honor-year">进行中</span><div><small>INNOVATION PROJECT</small><h3>全国大学生创新创业项目<br>成功立项</h3><p>项目当前仍在实施阶段，尚未结题。</p></div></article>
-        </div>
+    <section class="chapter wrap" id="work" aria-labelledby="work-title">
+      <div class="chapter-title"><span class="number">02</span><div><p class="eyebrow">个人职责 / 应用开发 · 设备通信 · 算法工程</p><h2 id="work-title">我具体完成了什么</h2></div></div>
+      <div class="work-list">
+        <article><div class="work-label"><span>A / 应用层</span><h3>App 全部前后端</h3><small>uni-app · Vue 3 · Express · MySQL</small></div><div><p>用 uni-app 实现移动端页面与交互，包括账户登录、个人资料、设备绑定、健康记录、日 / 周 / 月趋势、信号分析以及个人中心。服务端负责鉴权、设备关系、测量记录写入和按时间查询，让页面不只停留在静态展示。</p><p>最近一轮修复还梳理了页面入口、波形读取和参考血压标注接口，并固定 Node、依赖锁与 uni-app 工具链，减少“本机能打开、重新安装却构建失败”的问题。新增接口仍需与服务器版本同步，不等于已经全部上线。</p></div></article>
+        <article><div class="work-label"><span>B / 通信层</span><h3>ESP32 到服务器的链路</h3><small>UART · 二进制帧 · HTTP 上传</small></div><div><p>负责 ESP32 接收 STM32 数据并上传服务器，服务端校验接收到的帧、保存原始数据与元信息，再调度算法处理。保留原始文件很重要：预测结果不对时，可以重新播放同一次采集，区分传输、解析和模型三个环节的问题。</p><p>联调中重新核对了实际固件与历史协议：当前是单通道连续采样，旧帧头的 <code>ch=2</code> 只是兼容字段，不能据此把数据拆成两路。通信速率 1,152,000 baud 也不能当成 ADC 采样率。</p></div></article>
+        <article><div class="work-label"><span>C / 算法工程</span><h3>重训练、输入修正与调用封装</h3><small>MATLAB Runtime · Python · 训练数据整理</small></div><div><p>保留服务器 MATLAB 编译模型调用路线，用 Python 连接数据解析和模型输入输出；同时整理五特征重训练路线，追踪数据来源，并采用按受试者划分的验证方式，避免同一人的不同周期混入训练与测试集合。</p><p>近期修正重点是输入语义：先按连续单通道解码，再做抗混叠降采样，使 40 kHz 数据与模型 20 kHz 的时间尺度一致。重训练路线与现役编译模型分开管理；没有用未经验证的准确率来宣称优化成功，私有源码与模型也不在展示站公开。</p></div></article>
       </div>
     </section>
 
-    <section class="closing section-pad">
-      <p class="reveal">我关心的不只是“算法能跑”，而是信号如何被可靠采集、计算、存储，并最终成为用户能理解的产品。</p>
-      <div class="closing-links reveal delay-1">
-        <a href="https://github.com/chenyidan2006/laser-self-mixing-vascular-monitoring" target="_blank" rel="noreferrer">App & Server Pipeline ↗</a>
-        <a href="https://github.com/chenyidan2006/health-backend" target="_blank" rel="noreferrer">Backend & Database ↗</a>
+    <section class="app-section" id="app" aria-labelledby="app-title"><div class="wrap">
+      <div class="chapter-title"><span class="number">03</span><div><p class="eyebrow">全部为项目真实截图 / 点击可看原图</p><h2 id="app-title">一次测量，在 App 里怎么查看</h2></div></div>
+      <p class="section-lead">先选择设备，再查看测量信号与历史变化，最后管理个人资料。以下均为实际开发页面的运行截图；界面中的数值为演示内容，不是临床验证数据。</p>
+      <div class="screens">
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大设备管理真实截图"><img loading="lazy" src="./assets/app-device.jpg" width="386" height="844" alt="实际 App 设备管理页：已绑定设备、在线状态与设备编号绑定"></button><figcaption><h3>1. 绑定和选择设备</h3><p>根据编号绑定设备，区分在线状态与已保存记录。设备离线不意味着历史数据消失。</p></figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大最新小时汇总真实截图"><img loading="lazy" src="./assets/app-hour-current.png" width="366" height="528" alt="2026年10月16日重新运行当前 App 截取的小时汇总：6次演示测量、平均值、指标切换和10分钟时间刻度"></button><figcaption><h3>2. 查看近一小时</h3><p>汇总已保存测量的平均值，并按时间绘制曲线。此图为 10 月 16 日重新运行 App 截取，使用本地演示数据。</p></figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大信号分析真实截图"><img loading="lazy" src="./assets/app-waveform.jpg" width="390" height="844" alt="实际 App 信号分析页：采样信息、完整波形及局部放大"></button><figcaption><h3>3. 检查这次采集</h3><p>查看采样率、点数与信号图，而不只看一个预测数字，为异常测量留下排查入口。</p></figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大历史趋势真实截图"><img loading="lazy" src="./assets/app-trend-month.jpg" width="390" height="844" alt="实际 App 历史趋势页：日周月切换、收缩压舒张压曲线与最近记录"></button><figcaption><h3>4. 回看长期变化</h3><p>按日、周、月查看趋势与最近记录，展示收缩压、舒张压等指标的时间变化。</p></figcaption></figure>
       </div>
+      <details class="more-screens"><summary>更多真实页面：个人中心、个人资料、每日目标、帮助与关于</summary><div class="extra-screens">
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大个人中心截图"><img loading="lazy" src="./assets/app-profile.jpg" alt="实际 App 个人中心页：资料、设备、设置和帮助入口"></button><figcaption>个人中心</figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大个人资料截图"><img loading="lazy" src="./assets/app-personal.jpg" alt="实际 App 个人资料编辑页"></button><figcaption>个人资料</figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大每日目标截图"><img loading="lazy" src="./assets/app-goals.jpg" alt="实际 App 每日目标页"></button><figcaption>每日目标</figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大帮助截图"><img loading="lazy" src="./assets/app-help.jpg" alt="实际 App 帮助与反馈页"></button><figcaption>帮助与反馈</figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大关于截图"><img loading="lazy" src="./assets/app-about.jpg" alt="实际 App 关于页"></button><figcaption>关于产品</figcaption></figure>
+      </div></details>
+      <p class="caption-note">使用边界：血氧仍包含演示占位值；截图不是实时在线设备画面。参考血压录入、服务器部署与模型验证进展，均不能仅凭一个页面截图判断完成。</p>
+    </div></section>
+
+    <section class="chapter wrap" id="engineering" aria-labelledby="engineering-title">
+      <div class="chapter-title"><span class="number">04</span><div><p class="eyebrow">工程实现 / 输入一致性与数据追溯</p><h2 id="engineering-title">这条链路最容易出错的地方</h2></div></div>
+      <div class="engineering-grid"><div>
+        <h3>采样、传输、模型输入，必须分别计算</h3>
+        <p>当前固件每个采样点占 2 字节，连续单通道采集。一次 8 秒测量的原始负载是：</p>
+        <div class="calculation"><p><b>40,000 点/秒 × 8 秒</b><span>= 320,000 个采样点</span></p><p><b>320,000 点 × 2 字节</b><span>= 640,000 字节（不含帧头）</span></p></div>
+        <p>若 UART 使用 8N1，每字节含起始位和停止位，共占 10 bit。1,152,000 baud 对应理论上限 115,200 字节/秒；连续采样负载为 80,000 字节/秒。只算负载的理想发送时间约 5.56 秒，还要留出帧头、处理间隙与实际通信开销，不能把它当作完整测量耗时。</p>
+        <p>40 kHz 的 8 秒数据降到 20 kHz 后约为 160,000 点，时长仍是 8 秒。当前适配路径再取前 100,000 点，才得到模型使用的 5 秒输入。<strong>降采样是改变点数，不是让 8 秒自动变成 4 秒。</strong></p>
+      </div><div class="engineering-notes">
+        <article><h3>为什么不能按 <code>ch=2</code> 拆成两路？</h3><p>帧头字段沿用了旧协议，但当前 STM32 实际只顺序发送一个通道的 16 位样本。若把相邻点误当成不同通道，时间轴和输入点数都会错。当前解析以实际固件与单通道 40 kHz 为准；旧版实现留在归档中，不混入现役解析。</p></article>
+        <article><h3>为什么必须保存原始帧？</h3><p>只保存血压结果就无法复查输入。原始二进制与元信息一起保留，便于离线重放、核对字节数和重新解析；重传去重与算法队列则用于减少重复任务和文件互相覆盖。</p></article>
+        <article><h3>数据库在这里负责什么？</h3><p><code>users</code> 保存账户，<code>user_devices</code> 保存用户与设备的绑定关系，<code>user_health_data</code> 保存测量结果。后端按鉴权身份、设备和时间查询，App 再呈现记录与聚合趋势；原始波形文件与结构化结果分开管理。</p><a class="text-link" href="https://github.com/chenyidan2006/health-backend/blob/master/docs/DATABASE_SETUP_AND_USAGE.md" target="_blank" rel="noreferrer">数据库创建与使用说明 ↗</a></article>
+      </div></div>
+      <details class="hardware-more"><summary>查看实物细节与硬件分工</summary><p>ADS8688 与 STM32 位于自制 PCB 系统中；ESP32-S3 N16R8 为购买的核心开发板，通过飞线连接。老师设计激光头，另接的 MOS 管充当电源开关，按键触发后通电并在设定时间关闭。这里仅说明系统背景，不将硬件设计归入我的个人贡献。</p><div class="hardware-strip">
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大主控板实拍"><img loading="lazy" src="./assets/controller-board.jpg" alt="主控板实拍"></button><figcaption>主控板</figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大板间装配实拍"><img loading="lazy" src="./assets/board-stack.jpg" alt="多块 PCB 通过铜柱与排线装配"></button><figcaption>板间装配</figcaption></figure>
+        <figure><button class="image-button" data-lightbox type="button" aria-label="放大传感板实拍"><img loading="lazy" src="./assets/sensor-board-front.jpg" alt="传感板元器件面实拍"></button><figcaption>传感板器件面</figcaption></figure>
+      </div></details>
     </section>
+
+    <section class="outcome" id="outcome" aria-labelledby="outcome-title"><div class="wrap">
+      <div class="chapter-title"><span class="number">05</span><div><p class="eyebrow">结果与下一步</p><h2 id="outcome-title">有成果，也有明确的验证边界</h2></div></div>
+      <div class="outcome-grid"><figure class="award"><button class="image-button" data-lightbox type="button" aria-label="放大光电设计竞赛一等奖证书"><img loading="lazy" src="./assets/optoelectronics-first-prize.jpg" alt="第十四届全国大学生光电设计竞赛华北区赛一等奖证书"></button><figcaption>团队获奖证书 · 点击查看</figcaption></figure><div>
+        <h3>第十四届全国大学生光电设计竞赛 · 华北区赛一等奖</h3><p>团队：陈一丹、张博涵、蒙金涛；指导教师：赵宇。另获全国大学生创新创业训练计划项目立项，目前仍在实施中，尚未结题。</p>
+        <dl class="status-list"><div><dt>已经形成</dt><dd>采集原型、ESP32 上传、服务器算法调用、数据库与 App 展示的工程链路，以及可回溯的代码和说明文档。</dd></div><div><dt>正在完善</dt><dd>采集与模型输入的一致性、App 页面的真实接口联通、构建环境复现，以及新增接口与服务器版本的同步。</dd></div><div><dt>仍需验证</dt><dd>扩大带袖带参考值的真实样本；确认模型输入与原始训练流程的一致性；独立评估泛化误差。演示兜底与占位数据不能算作算法有效结果。</dd></div></dl>
+        <p class="boundary">本项目是科研与竞赛原型，不是已经完成临床验证的医疗器械。这里展示的是我在全栈开发、设备通信和算法工程化中的具体工作，不宣称未经证实的血压精度。</p>
+      </div></div>
+      <div class="resource-links"><a href="https://github.com/chenyidan2006/laser-self-mixing-vascular-monitoring" target="_blank" rel="noreferrer">项目主仓库 ↗</a><a href="https://github.com/chenyidan2006/health-backend" target="_blank" rel="noreferrer">后端与数据库 ↗</a><a href="https://github.com/chenyidan2006/laser-self-mixing-vascular-monitoring/blob/master/docs/DEPLOYMENT_PORTS_AND_DATA_FLOW.md" target="_blank" rel="noreferrer">端口与数据链路说明 ↗</a></div>
+    </div></section>
   </main>
-
-  <footer><span>陈一丹 · SMI 血管参数测量系统</span><span>Research prototype · 2026</span></footer>
-
-  <dialog class="lightbox"><button type="button" aria-label="关闭证书大图">×</button><img src="./assets/optoelectronics-first-prize.jpg" alt="一等奖证书大图"></dialog>
+  <footer class="wrap"><span>陈一丹 / 激光自混合干涉血管参数测量</span><span>内容更新于 2026.10.16</span></footer>
+  <dialog class="lightbox" aria-label="图片原图预览"><button class="lightbox-close" type="button" aria-label="关闭图片预览">关闭 ×</button><img alt=""><p class="lightbox-caption"></p></dialog>
   <script src="./script.js"></script>
 </body>
 </html>
