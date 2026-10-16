@@ -16,6 +16,10 @@ Zhao, Y., Yao, X., Hu, J., Zhang, Z., and Chen, T. **Cuff-less wearable biosenso
 
 ## 原型照片与真实界面
 
+### 城市道路识别项目
+
+`dist/assets/road-recognition-award.png` 从用户提供的 `CRAIC2026-NF-BFPR6C(1).pdf` 渲染，保留完整证书内容，不修改文字、奖项或姓名。个人首页和独立介绍页仅展示该证书与确认的信息。技术概述和个人分工摘要来自用户指定项目目录中的参赛技术报告第7、59–60页，不发布原报告及其中教师电话，不公开代码或模型。
+
 其余实物照片、奖项证书和App原始截图来自用户提供的项目材料或实际运行截图。`app-hour-current.png` 是2026-10-16运行当前App后截取，使用本地合成示例测量，不是线上患者或用户数据。详情见README。
 
 ## 封面修饰图
