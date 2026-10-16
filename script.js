@@ -9,9 +9,9 @@ document.querySelectorAll('[data-lightbox]').forEach(button => {
     const source = button.querySelector('img');
     if (!source) return;
     opener = button;
-    previewImage.src = source.src;
-    previewImage.alt = source.alt;
-    previewCaption.textContent = source.alt;
+    previewImage.src = button.dataset.original || source.src;
+    previewImage.alt = button.dataset.caption || source.alt;
+    previewCaption.textContent = button.dataset.caption || source.alt;
     lightbox.showModal();
     document.body.classList.add('preview-open');
   });
